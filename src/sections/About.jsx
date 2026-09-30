@@ -1,0 +1,4 @@
+import SectionTitle from '../components/SectionTitle.jsx';import Reveal from '../components/Reveal.jsx';import {profile,pillars} from '../data/portfolio.js'
+export default function About(){return <section id="about" className="py-20"><div className="mx-auto max-w-6xl px-5"><SectionTitle title="About Me"/>
+<div className="grid lg:grid-cols-2 gap-10 items-center"><Reveal><p className="text-slate-300 leading-relaxed">{profile.summary}</p><p className="mt-5 text-cyan-300 text-sm">Currently building my foundation in modern cloud data engineering and analytics.</p></Reveal>
+<div className="grid grid-cols-2 gap-4">{pillars.map(([n,t],i)=><Reveal key={n} delay={i*.08}><div className="glass p-5 hover:border-cyan-400/40 transition"><p className="text-cyan-300 text-sm font-semibold">{n}</p><p className="mt-2 text-white font-semibold">{t}</p></div></Reveal>)}</div></div></div></section>}

@@ -1,0 +1,13 @@
+import {useState} from 'react';import {AnimatePresence,motion} from 'framer-motion';import {Github,ChevronDown} from 'lucide-react'
+import SectionTitle from '../components/SectionTitle.jsx';import Reveal from '../components/Reveal.jsx';import Button from '../components/Button.jsx';import {projects} from '../data/portfolio.js'
+function Card({p,i}){const [o,setO]=useState(false);return <Reveal><article className="glass p-6 md:p-8">
+<div className="flex flex-wrap items-center gap-3 text-sm"><span className="text-cyan-300 font-semibold">0{i+1}</span><span className="text-slate-400">{p.category}</span></div>
+<h3 className="mt-2 text-2xl font-bold text-white">{p.title}</h3><p className="mt-3 text-slate-300 max-w-3xl">{p.desc}</p>
+<div className="mt-5 flex flex-wrap gap-2">{p.tech.map(t=><span key={t} className="rounded-full border border-blue-400/25 bg-blue-500/10 px-3 py-1 text-xs">{t}</span>)}</div>
+<ul className="mt-5 grid sm:grid-cols-2 gap-x-6 gap-y-1 text-sm text-slate-400 list-disc pl-5">{p.points.map(x=><li key={x}>{x}</li>)}</ul>
+<div className="mt-6 flex flex-wrap items-center gap-2 text-xs" aria-label="Pipeline visual">{p.visual.map((v,k)=><span key={v} className="flex items-center gap-2"><span className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-slate-200">{v}</span>{k<p.visual.length-1&&<span className="flowline-x h-0.5 w-5"/>}</span>)}</div>
+<div className="mt-6 flex flex-wrap gap-3"><Button icon={Github} href={p.github} disabled={!p.github}>GitHub</Button>
+{p.details&&<button onClick={()=>setO(!o)} aria-expanded={o} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10">Project Details<ChevronDown size={16} className={'transition '+(o?'rotate-180':'')}/></button>}</div>
+{!p.github&&<p className="mt-2 text-xs text-slate-500">Repository link coming soon.</p>}
+<AnimatePresence>{o&&p.details&&<motion.dl initial={{height:0,opacity:0}} animate={{height:'auto',opacity:1}} exit={{height:0,opacity:0}} className="overflow-hidden grid sm:grid-cols-2 gap-4 mt-5">{p.details.map(([k,v])=><div key={k} className="rounded-xl bg-white/5 p-4"><dt className="text-cyan-300 font-semibold text-sm">{k}</dt><dd className="mt-1 text-sm text-slate-300">{v}</dd></div>)}</motion.dl>}</AnimatePresence></article></Reveal>}
+export default function Projects(){return <section id="projects" className="py-20"><div className="mx-auto max-w-6xl px-5"><SectionTitle title="Featured Projects"/><div className="grid gap-6">{projects.map((p,i)=><Card key={p.title} p={p} i={i}/>)}</div></div></section>}
